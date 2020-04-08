@@ -12,10 +12,10 @@ include_once "EncryptorLogic.php";
 include_once "EncryptorException.php";
 
 // 假设企业在BOSS系统上的数据回调配置参数如下
-$companyKey = "b9ca9a10-7878-11ea-ae73-00163e0a522b";
+$companyKey = 'b9ca9a10-7878-11ea-ae73-00163e0a522b';
 $url = 'https://your-website';
-$token = "3ELgc0TvWB5X9bXqueBpE4sF2dJvX0";
-$encodingAesKey = "cLU2SZiQtNTckwBYEbpgIj8bvj7Wjs6hY90DoFtNiBH";
+$token = '3ELgc0TvWB5X9bXqueBpE4sF2dJvX0';
+$encodingAesKey = 'cLU2SZiQtNTckwBYEbpgIj8bvj7Wjs6hY90DoFtNiBH';
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +23,7 @@ $encodingAesKey = "cLU2SZiQtNTckwBYEbpgIj8bvj7Wjs6hY90DoFtNiBH";
 |--------------------------------------------------------------------------
 |
 | 企业在 BOSS 系统设置数据回调配置，点击保存时，BOSS系统会向数据回调 URL 发送一个 GET 请求，验证地址有效性
-| GET https://your-website?msgSignature=53e2f8d0ba53cb7d49ffc9b42d88de3e1a666cad&timestamp=1586227726&nonce=817715303&encrypt=Yzl6eGlLandlMmtZajcyTkY0M1pEcHdlMmdWc0ZZQXR1Vmd5NHpsV1lKeFU0L2h3UnpCWGpya2dYNkdxK0NiTDVwRkJXOEQ2MUtnRFpua1l2TkNQdXN4M2N3YVJGdzRUdERaQlJOeUJBVzJlVWlDN3ZyNzlyWVplMmhKTllQMHI%3D
+| GET https://your-website?msgSignature=22e8f41a047f7c9ca30bc6ec1caaf2b3bb354f01&timestamp=1586337853&nonce=24803847&encrypt=5cOIsn%2BKgks5S1%2Flu8Xcn4jn5PpNio00hf2VVpbhaniz5Ip8nuUc2yt3agPiNhRTbp%2FZ2bKuS0ujTyMPMATNWGiQHiwWyKy2ZHv%2BlQ1pcmEGOfnAau78SFdOzQ55rC6D
 |
 | 企业接收到请求后
 | 1、解析出 GET 请求的参数，包括消息体签名(msgSignature)，时间戳(timestamp)，随机数(nonce)以及 BOSS 系统推送过来的加密字符串(encrypt),
@@ -35,10 +35,10 @@ $encodingAesKey = "cLU2SZiQtNTckwBYEbpgIj8bvj7Wjs6hY90DoFtNiBH";
 */
 
 // GET 请求的参数
-$msgSignature = '53e2f8d0ba53cb7d49ffc9b42d88de3e1a666cad';
-$timestamp = '1586227726';
-$nonce = '817715303';
-$encrypt = 'Yzl6eGlLandlMmtZajcyTkY0M1pEcHdlMmdWc0ZZQXR1Vmd5NHpsV1lKeFU0L2h3UnpCWGpya2dYNkdxK0NiTDVwRkJXOEQ2MUtnRFpua1l2TkNQdXN4M2N3YVJGdzRUdERaQlJOeUJBVzJlVWlDN3ZyNzlyWVplMmhKTllQMHI=';
+$msgSignature = '22e8f41a047f7c9ca30bc6ec1caaf2b3bb354f01';
+$timestamp = '1586337853';
+$nonce = '24803847';
+$encrypt = '5cOIsn+Kgks5S1/lu8Xcn4jn5PpNio00hf2VVpbhaniz5Ip8nuUc2yt3agPiNhRTbp/Z2bKuS0ujTyMPMATNWGiQHiwWyKy2ZHv+lQ1pcmEGOfnAau78SFdOzQ55rC6D';
 
 // 需要返回的明文
 $echoStr = '';
@@ -63,10 +63,10 @@ print("===============================\n\n");
 | POST https://your-website
 |
 | {
-|   "msgSignature": "2bce89b7f32929e6506b73d85b36fbf87cf1d674",
-|   "timestamp": 1586232017,
-|   "nonce": 539071018,
-|   "encrypt": "eTBLOEszcnk0LzlHUVBscHBBWDQrQ0l1bSttQnN5Q1JOc2lnL0xDaWxLdFpQSkIrNWVXd1B3MFRXaFI1Q0xKVTlXRVVFakMrcjQvSlRFZUpaanVXMkhOZkZRUS9GQXhraThJZHBwZnRBTHM4OVVaaElRUDZyNllqLzVTTWhvMHU0TGRGK3BMZkloOE8wbjVNZ2NxT1U4cmxzc2RWd2UxQ1B3Tm9CZm9aN09qMXdacmdzeCtldkZDN2JuU1NDcHVTOEpraElJcWpkbWR5dU9OV0ZpRitWenpFUHk5Z2FsQ1hJTjVraXhHbjF1dW1xaTEzaEFFOGdOWlMxNEVaa2tTbVVEUERmU0dOK1p2Zk1sKzlFclYyTnI3OWZXNkQrWHY1VjRYb0xlRVA2dWU2c3JzNm5rM1BGOHlnMnpqaE9lYjRxeHg5dXF3Z24xZmlHUWVZSS8vTFQ0MjRZcGdNZDEza3R2NXVzam9GcS9iSkZCT1VTZjVZci9zc1M0Q1RtcHRFcllYTXZnUGl4RGZMZm4zT1JmZnByL1RPMktSZXNkbDdVSE9nMWZ6MEEvS2p4KzYyVHZlKzk2R3NyTkN1T29OOTVHU1VqbW1tRnBQZ1BlT0VWMjByVVE9PQ==",
+|   "msgSignature": "e349f09f7a9678b27b853afb3e70175738bb5bbb",
+|   "timestamp": 1586338346,
+|   "nonce": 484615793,
+|   "encrypt": "B1QdxkhQCfkrxMnnyou2+DICf1ROTDegA+J3fX+HT0g0Y/l1QN9v4F2RjORvgZ2S6z1eOjJVc/oAdJdLBtMJdSpH4d2mrS0FNu5Tdd/uuRKC1jeLiRw5WsEb4VxezwUAbRZLew5eIjdLzuMeG71FXQxyYPYz/HgolNttExFfdfJEB129Lfj2d8E6EU3ZQMREa04Km69nPGHEhHgIdlYBKBCa3x4HVJm5iHki8AW0S6EtLU59sd9HnzjB2QDSK0BlyuugM9m+eIdqs8MXr7oDQLz7fSjqUzbsWUEbY5sMC8Mvlfp8MvmeC0IDkfJLjbauKph69hALULN9TjaQ3MGW1/kPnf1uXbeOpVl4xgF1ajjWVdsCULrGasGcJsrcrHRrnm7qyXtiWzMEaemogFnzTKTfaplQAREfr9Aegca95nZCjcSRgt1L84juy2jpfADe9578QwonOzUgMENmQn4NLg==",
 | }
 |
 | 企业接收到请求后
@@ -78,10 +78,10 @@ print("===============================\n\n");
 */
 
 // POST 请求的参数
-$msgSignature = '2bce89b7f32929e6506b73d85b36fbf87cf1d674';
-$timestamp = '1586232017';
-$nonce = '539071018';
-$encrypt = 'eTBLOEszcnk0LzlHUVBscHBBWDQrQ0l1bSttQnN5Q1JOc2lnL0xDaWxLdFpQSkIrNWVXd1B3MFRXaFI1Q0xKVTlXRVVFakMrcjQvSlRFZUpaanVXMkhOZkZRUS9GQXhraThJZHBwZnRBTHM4OVVaaElRUDZyNllqLzVTTWhvMHU0TGRGK3BMZkloOE8wbjVNZ2NxT1U4cmxzc2RWd2UxQ1B3Tm9CZm9aN09qMXdacmdzeCtldkZDN2JuU1NDcHVTOEpraElJcWpkbWR5dU9OV0ZpRitWenpFUHk5Z2FsQ1hJTjVraXhHbjF1dW1xaTEzaEFFOGdOWlMxNEVaa2tTbVVEUERmU0dOK1p2Zk1sKzlFclYyTnI3OWZXNkQrWHY1VjRYb0xlRVA2dWU2c3JzNm5rM1BGOHlnMnpqaE9lYjRxeHg5dXF3Z24xZmlHUWVZSS8vTFQ0MjRZcGdNZDEza3R2NXVzam9GcS9iSkZCT1VTZjVZci9zc1M0Q1RtcHRFcllYTXZnUGl4RGZMZm4zT1JmZnByL1RPMktSZXNkbDdVSE9nMWZ6MEEvS2p4KzYyVHZlKzk2R3NyTkN1T29OOTVHU1VqbW1tRnBQZ1BlT0VWMjByVVE9PQ==';
+$msgSignature = 'e349f09f7a9678b27b853afb3e70175738bb5bbb';
+$timestamp = '1586338346';
+$nonce = '484615793';
+$encrypt = 'B1QdxkhQCfkrxMnnyou2+DICf1ROTDegA+J3fX+HT0g0Y/l1QN9v4F2RjORvgZ2S6z1eOjJVc/oAdJdLBtMJdSpH4d2mrS0FNu5Tdd/uuRKC1jeLiRw5WsEb4VxezwUAbRZLew5eIjdLzuMeG71FXQxyYPYz/HgolNttExFfdfJEB129Lfj2d8E6EU3ZQMREa04Km69nPGHEhHgIdlYBKBCa3x4HVJm5iHki8AW0S6EtLU59sd9HnzjB2QDSK0BlyuugM9m+eIdqs8MXr7oDQLz7fSjqUzbsWUEbY5sMC8Mvlfp8MvmeC0IDkfJLjbauKph69hALULN9TjaQ3MGW1/kPnf1uXbeOpVl4xgF1ajjWVdsCULrGasGcJsrcrHRrnm7qyXtiWzMEaemogFnzTKTfaplQAREfr9Aegca95nZCjcSRgt1L84juy2jpfADe9578QwonOzUgMENmQn4NLg==';
 
 // 解密出来的明文
 $jsonStr = '';

@@ -18,13 +18,15 @@ class EncryptorLogic
     | Encryptor Logic
     |--------------------------------------------------------------------------
     |
-    | 数据通信加解密工具的业务逻辑，包含验证回调url、加密encrypt、解密decrypt
+    | 数据通信加解密工具的业务逻辑，包含加密encrypt、解密decrypt
     |
     */
 
     const ERROR_INVALID_SIGNATURE = -10001; // 签名校验错误
     const ERROR_INVALID_COMPANY_KEY = -10002; // 企业标识校验错误
-    const ERROR_ENCRYPT_AES = -10003; // AES 校验错误
+    const ERROR_ENCRYPT_AES = -10003; // 加密失败
+    const ERROR_DECRYPT_AES = -10005; // 解密失败
+    const ERROR_ILLEGAL_BUFFER = -10006; // 解密后得到的buffer非法
 
     /**
      * 企业标识.
@@ -57,11 +59,11 @@ class EncryptorLogic
     /**
      * 构造方法
      *
-     * @param string      $companyKey 企业标识
-     * @param string|null $token 用于计算签名的 token
-     * @param string|null $encodingAESKey 经过 base64 编码的 AESKey
+     * @param string $companyKey 企业标识
+     * @param string $token 用于计算签名的 token
+     * @param string $encodingAESKey 经过 base64 编码的 AESKey
      */
-    public function __construct($companyKey, $token = null, $encodingAESKey = null)
+    public function __construct($companyKey, $token, $encodingAESKey)
     {
         $this->companyKey = $companyKey;
         $this->token = $token;
@@ -90,7 +92,7 @@ class EncryptorLogic
                 $pkcs7Str,
                 $this->aesKey,
                 substr($this->aesKey, 0, 16),
-                OPENSSL_ZERO_PADDING
+                OPENSSL_NO_PADDING
             ));
         } catch (\Throwable $e) {
             throw new EncryptorException($e->getMessage(), self::ERROR_ENCRYPT_AES);
@@ -127,15 +129,24 @@ class EncryptorLogic
             throw new EncryptorException('Invalid Signature.', self::ERROR_INVALID_SIGNATURE);
         }
 
-        $decrypted = AESLogic::decrypt(
-            base64_decode($content, true),
-            $this->aesKey,
-            substr($this->aesKey, 0, 16),
-            OPENSSL_ZERO_PADDING
-        );
-        $result = $this->pkcs7Unpad($decrypted);
-        $content = substr($result, 16, strlen($result));
-        $contentLen = unpack('N', substr($content, 0, 4))[1];
+        try {
+            $decrypted = AESLogic::decrypt(
+                base64_decode($content, true),
+                $this->aesKey,
+                substr($this->aesKey, 0, 16),
+                OPENSSL_NO_PADDING
+            );
+        } catch (\Throwable $e) {
+            throw new EncryptorException($e->getMessage(), self::ERROR_DECRYPT_AES);
+        }
+
+        try {
+            $result = $this->pkcs7Unpad($decrypted);
+            $content = substr($result, 16, strlen($result));
+            $contentLen = unpack('N', substr($content, 0, 4))[1];
+        } catch (\Throwable $e) {
+            throw new EncryptorException($e->getMessage(), self::ERROR_ILLEGAL_BUFFER);
+        }
 
         // 验证 companyKey
         if (trim(substr($content, $contentLen + 4)) !== $this->companyKey) {
