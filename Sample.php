@@ -13,7 +13,7 @@ include_once "EncryptorException.php";
 
 // 假设企业在BOSS系统上的数据回调配置参数如下
 $companyKey = 'b9ca9a10-7878-11ea-ae73-00163e0a522b';
-$url = 'https://your-website';
+$url = 'https://api.corp.com';
 $token = '3ELgc0TvWB5X9bXqueBpE4sF2dJvX0';
 $encodingAesKey = 'cLU2SZiQtNTckwBYEbpgIj8bvj7Wjs6hY90DoFtNiBH';
 
@@ -23,7 +23,7 @@ $encodingAesKey = 'cLU2SZiQtNTckwBYEbpgIj8bvj7Wjs6hY90DoFtNiBH';
 |--------------------------------------------------------------------------
 |
 | 企业在 BOSS 系统设置数据回调配置，点击保存时，BOSS系统会向数据回调 URL 发送一个 GET 请求，验证地址有效性
-| GET https://your-website?msgSignature=22e8f41a047f7c9ca30bc6ec1caaf2b3bb354f01&timestamp=1586337853&nonce=24803847&encrypt=5cOIsn%2BKgks5S1%2Flu8Xcn4jn5PpNio00hf2VVpbhaniz5Ip8nuUc2yt3agPiNhRTbp%2FZ2bKuS0ujTyMPMATNWGiQHiwWyKy2ZHv%2BlQ1pcmEGOfnAau78SFdOzQ55rC6D
+| GET https://api.corp.com?msgSignature=22e8f41a047f7c9ca30bc6ec1caaf2b3bb354f01&timestamp=1586337853&nonce=24803847&encrypt=5cOIsn%2BKgks5S1%2Flu8Xcn4jn5PpNio00hf2VVpbhaniz5Ip8nuUc2yt3agPiNhRTbp%2FZ2bKuS0ujTyMPMATNWGiQHiwWyKy2ZHv%2BlQ1pcmEGOfnAau78SFdOzQ55rC6D
 |
 | 企业接收到请求后
 | 1、解析出 GET 请求的参数，包括消息体签名(msgSignature)，时间戳(timestamp)，随机数(nonce)以及 BOSS 系统推送过来的加密字符串(encrypt),
@@ -60,7 +60,7 @@ print("===============================\n\n");
 |
 | 企业在 BOSS 系统成功设置数据回调后，在设备空间状态变更、设备在线状态变更、设备电池电量变更等情况下，BOSS系统会向数据回调 URL 发送一个 POST 请求，
 | 推送变更消息，推送的变更消息经过 BOSS 系统加密，密文格式请参考官方文档
-| POST https://your-website
+| POST https://api.corp.com
 |
 | {
 |   "msgSignature": "e349f09f7a9678b27b853afb3e70175738bb5bbb",
